@@ -78,22 +78,24 @@ body {
   }
 
   .menu-image {
-  position: static;
-  transform: none;
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin-top: -30px;
-  margin-bottom: 30px;
-}
+    position: static;
+    transform: none;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -28px;
+    margin-bottom: 30px;
+    /* No change needed here for the container */
+  }
 
-.menu-image img {
-  max-width: 280px;
-  width: auto;
-  height: auto;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
+  .menu-image img {
+    max-width: 280px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-right: -20px; /* Pull the image itself to the right */
+  }
 
 }
