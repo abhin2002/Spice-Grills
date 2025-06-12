@@ -1,63 +1,90 @@
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #f5f5f5;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #0a2b40, #031d2c);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
+/* Navbar with solid deep background */
 .navbar {
   position: sticky;
   top: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 1000;
+  background: #081c2d;
   display: flex;
   justify-content: space-between;
   padding: 1rem 2rem;
-  z-index: 999;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .logo {
   font-family: 'Playfair Display', serif;
-  font-size: 1.5rem;
-  color: #a52a2a;
+  font-size: 1.8rem;
+  color: #f8f8f8; /* soft gold */
 }
 
 nav a {
-  margin-left: 1rem;
-  text-decoration: none;
-  color: #333;
+  margin-left: 1.2rem;
   font-weight: 500;
+  color: #f0f0f0;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 nav a:hover {
-  color: #a52a2a;
+  color: #f2c25b;
 }
 
+/* PDF container */
 #pdf-container {
+  padding: 80px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem 1rem;
 }
 
+/* PDF canvas look like modern cards */
 canvas {
-  margin: 1.5rem 0;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  border-radius: 12px;
-  max-width: 90%;
-  transition: transform 0.3s;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: 90%;
+  max-width: 900px;
+  transition: transform 0.3s ease;
 }
 
 canvas:hover {
   transform: scale(1.01);
 }
 
+/* Footer */
 footer {
-  background: #222;
-  color: white;
+  background-color: #081c2d;
+  color: #bbb;
   text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  nav a {
+    font-size: 0.9rem;
+    margin-left: 0.8rem;
+  }
+
+  #pdf-container {
+    padding: 60px 10px;
+  }
+
+  canvas {
+    width: 95%;
+  }
 }
