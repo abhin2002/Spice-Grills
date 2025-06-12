@@ -3,28 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rice & Noodles</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <title>Spice & Grill</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="menu-wrapper">
-    <div class="menu-text">
-      <h1>Rice & Noodles</h1>
-      <div class="menu-image">
-        <img src="noodles-removebg-preview.png" alt="Noodles Plate" class="image-plate" />
-      </div>
-      <div class="menu-item"><span>Fried Rice Veg/ Egg/Chicken/Mixed</span><span class="price">150/170/180/230</span></div>
-      <div class="menu-item"><span>Schezwan Fried Rice Veg/Chicken</span><span class="price">180/210</span></div>
-      <div class="menu-item"><span>Prawns Fried Rice</span><span class="price">280</span></div>
-      <div class="menu-item"><span>Mushroom Fried Rice</span><span class="price">180</span></div>
-      <div class="menu-item"><span>Manchow Fried Rice</span><span class="price">250</span></div>
-      <div class="menu-item"><span>Noodles Veg/Egg/Chicken</span><span class="price">180/200/230</span></div>
-      <div class="menu-item"><span>Mixed Noodles</span><span class="price">250</span></div>
-      <div class="menu-item"><span>Schezwan Noodles Veg/Chicken</span><span class="price">200/250</span></div>
-      <div class="menu-item"><span>Hakka Noodles</span><span class="price">245</span></div>
-      <div class="menu-item"><span>Prawns Noodles</span><span class="price">300</span></div>
-    </div>
-  </div>
+
+  <header class="navbar">
+    <div class="logo">Spice & Grill</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#soups">Soups</a>
+      <a href="#veg">Veg</a>
+      <a href="#nonveg">Non-Veg</a>
+      <a href="#drinks">Drinks</a>
+      <a href="#desserts">Desserts</a>
+      <a href="#mojitos">Mojitos</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="menu-card fade-in"><img src="images/page1.jpg" alt="Cover" /></section>
+    <section id="soups" class="menu-card fade-in"><img src="images/page2.jpg" alt="Soups" /></section>
+    <section id="veg" class="menu-card fade-in"><img src="images/page4.jpg" alt="Veg Menu" /></section>
+    <section id="nonveg" class="menu-card fade-in"><img src="images/page5.jpg" alt="Non-Veg Menu" /></section>
+    <section id="drinks" class="menu-card fade-in"><img src="images/page11.jpg" alt="Drinks" /></section>
+    <section id="desserts" class="menu-card fade-in"><img src="images/page12.jpg" alt="Desserts" /></section>
+    <section id="mojitos" class="menu-card fade-in"><img src="images/page15.jpg" alt="Mojitos & Info" /></section>
+  </main>
+
+  <footer>
+    <p>© 2025 Spice & Grill | Nadapuram, Kerala</p>
+  </footer>
+
+  <script>
+    // Simple fade-in animation on scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const options = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, options);
+
+    faders.forEach(fader => observer.observe(fader));
+  </script>
+
 </body>
 </html>
