@@ -1,43 +1,40 @@
-const url = 'Spice&Grill Menu.pdf';
-
+const url = 'Spice&Grill Menu_compressed.pdf';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
 const container = document.getElementById('pdf-container');
 
 pdfjsLib.getDocument(url).promise.then(pdf => {
-  for (let i = 1; i <= pdf.numPages; i++) {
+  const totalPages = pdf.numPages;
+
+  // Create placeholders
+  for (let i = 1; i <= totalPages; i++) {
     const canvas = document.createElement('canvas');
     canvas.id = `page${i}`;
+    canvas.classList.add('pdf-page');
     canvas.dataset.pageNumber = i;
-    canvas.style.minHeight = '500px'; // pre-reserved height
+    canvas.style.minHeight = '500px';
     container.appendChild(canvas);
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const canvas = entry.target;
-        const pageNum = parseInt(canvas.dataset.pageNumber);
+  // Sequential render function
+  const renderPageSequentially = (pageNum = 1) => {
+    if (pageNum > totalPages) return;
 
-        if (!canvas.dataset.loaded) {
-          pdf.getPage(pageNum).then(page => {
-            const viewport = page.getViewport({ scale: 1.5 });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+    const canvas = document.getElementById(`page${pageNum}`);
+    const context = canvas.getContext('2d');
 
-            page.render({
-              canvasContext: canvas.getContext('2d'),
-              viewport
-            });
+    pdf.getPage(pageNum).then(page => {
+      const viewport = page.getViewport({ scale: 1.5 });
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
 
-            canvas.dataset.loaded = "true"; // mark as loaded
-          });
-        }
-      }
+      page.render({ canvasContext: context, viewport }).promise.then(() => {
+        // Once one page is done, move to the next
+        renderPageSequentially(pageNum + 1);
+      });
     });
-  }, {
-    threshold: 0.1
-  });
+  };
 
-  document.querySelectorAll('canvas').forEach(c => observer.observe(c));
+  // Start sequential rendering
+  renderPageSequentially();
 });
