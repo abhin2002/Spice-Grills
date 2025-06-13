@@ -5,8 +5,8 @@ const totalPages = 15; // Update if needed
 
 function renderSinglePagePDF(pageNumber) {
   const fileName = `Spice&Grill Menu-${pageNumber}.pdf`;
-  const folderPath = 'extracted-pages'; // 👈 Update this to match your folder
-  const url = encodeURI(folderPath + fileName);
+  const folderPath = 'Spice-Grills/extracted-pages/';
+  const url = folderPath + encodeURIComponent(fileName);
 
   const canvas = document.createElement('canvas');
   canvas.id = `page${pageNumber}`;
@@ -24,8 +24,11 @@ function renderSinglePagePDF(pageNumber) {
       const context = canvas.getContext('2d');
       return page.render({ canvasContext: context, viewport }).promise;
     });
+  }).catch(err => {
+    console.error(`Error loading page ${pageNumber}:`, err.message);
   });
 }
+
 
 
 // Serial loading loop
