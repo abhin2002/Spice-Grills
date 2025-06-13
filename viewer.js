@@ -1,40 +1,38 @@
-const url = 'Spice&Grill Menu_compressed.pdf';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
 const container = document.getElementById('pdf-container');
+const totalPages = 15; // Update if needed
 
-pdfjsLib.getDocument(url).promise.then(pdf => {
-  const totalPages = pdf.numPages;
+function renderSinglePagePDF(pageNumber) {
+  const fileName = `Spice&Grill Menu-${pageNumber}.pdf`;
+  const folderPath = 'extracted-pages'; // 👈 Update this to match your folder
+  const url = encodeURI(folderPath + fileName);
 
-  // Create placeholders
-  for (let i = 1; i <= totalPages; i++) {
-    const canvas = document.createElement('canvas');
-    canvas.id = `page${i}`;
-    canvas.classList.add('pdf-page');
-    canvas.dataset.pageNumber = i;
-    canvas.style.minHeight = '500px';
-    container.appendChild(canvas);
-  }
+  const canvas = document.createElement('canvas');
+  canvas.id = `page${pageNumber}`;
+  canvas.classList.add('pdf-page');
+  container.appendChild(canvas);
 
-  // Sequential render function
-  const renderPageSequentially = (pageNum = 1) => {
-    if (pageNum > totalPages) return;
+  return pdfjsLib.getDocument(url).promise.then(pdf => {
+    return pdf.getPage(1).then(page => {
+      const scale = window.innerWidth < 768 ? 1.0 : 1.5;
+      const viewport = page.getViewport({ scale });
 
-    const canvas = document.getElementById(`page${pageNum}`);
-    const context = canvas.getContext('2d');
-
-    pdf.getPage(pageNum).then(page => {
-      const viewport = page.getViewport({ scale: 1.5 });
-      canvas.height = viewport.height;
       canvas.width = viewport.width;
+      canvas.height = viewport.height;
 
-      page.render({ canvasContext: context, viewport }).promise.then(() => {
-        // Once one page is done, move to the next
-        renderPageSequentially(pageNum + 1);
-      });
+      const context = canvas.getContext('2d');
+      return page.render({ canvasContext: context, viewport }).promise;
     });
-  };
+  });
+}
 
-  // Start sequential rendering
-  renderPageSequentially();
-});
+
+// Serial loading loop
+async function loadPagesSerially() {
+  for (let i = 1; i <= totalPages; i++) {
+    await renderSinglePagePDF(i);
+  }
+}
+
+loadPagesSerially();
