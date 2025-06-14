@@ -3,7 +3,7 @@
 
     const container = document.getElementById('pdf-container');
     const totalPages = 15; // Update this as needed
-    const folderPath = 'Spice-Grills/extracted-pages/'; // For GitHub Pages hosting under repo
+    const folderPath = 'extracted-pages/'; // For GitHub Pages hosting under repo
 
     function renderSinglePagePDF(pageNumber) {
       const fileName = `SpiceGrillMenu-${pageNumber}.pdf`;
