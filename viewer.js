@@ -5,9 +5,9 @@ const totalPages = 15; // Update if needed
 
 function renderSinglePagePDF(pageNumber) {
   const fileName = `SpiceGrillMenu-${pageNumber}.pdf`;
-  const folderPath = 'Spice-Grills/extracted-pages/';
-  const url = folderPath + encodeURIComponent(fileName);
-
+  const folderPath = 'extracted-pages'; // 👈 Update this to match your folder
+  const url = encodeURI(folderPath + fileName);
+  
   const canvas = document.createElement('canvas');
   canvas.id = `page${pageNumber}`;
   canvas.classList.add('pdf-page');
