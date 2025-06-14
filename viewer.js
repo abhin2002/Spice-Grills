@@ -4,7 +4,7 @@ const container = document.getElementById('pdf-container');
 const totalPages = 15; // Update if needed
 
 function renderSinglePagePDF(pageNumber) {
-  const fileName = `Spice&Grill Menu-${pageNumber}.pdf`;
+  const fileName = `SpiceGrillMenu-${pageNumber}.pdf`;
   const folderPath = '/extracted-pages/';
   const url = folderPath + encodeURIComponent(fileName);
 
