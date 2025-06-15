@@ -1,41 +1,36 @@
+from pdf2image import convert_from_path
 import os
-import re
+import zipfile
 
-def sanitize_filename(filename):
-    # Remove special characters, keep alphanumeric, dash and underscore
-    name, ext = os.path.splitext(filename)
-    # Remove anything that's not letter, digit, hyphen or underscore
-    name = re.sub(r'[^A-Za-z0-9_-]', '', name)
-    return name + ext
+def pdf_to_png_and_zip(pdf_path, output_folder, zip_path, dpi=600, poppler_path=r"C:/poppler-23.11.0/Library/bin"):
+    print(f"[INFO] Starting conversion for: {pdf_path}")
+    print(f"[INFO] DPI set to: {dpi}")
 
-def rename_pdfs_in_folder(parent_folder):
-    renamed_files = []
+    # # Create output folder
+    # if not os.path.exists(output_folder):
+    #     print(f"[INFO] Creating output folder at: {output_folder}")
+    #     os.makedirs(output_folder)
 
-    for root, dirs, files in os.walk(parent_folder):
-        for file in files:
-            if file.lower().endswith(".pdf"):
-                old_path = os.path.join(root, file)
-                new_filename = sanitize_filename(file)
-                new_path = os.path.join(root, new_filename)
+    # Convert PDF to images
+    print("[INFO] Converting PDF pages to images...")
+    images = convert_from_path(pdf_path, dpi=dpi)
+    print(f"[INFO] Total pages found: {len(images)}")
 
-                # Rename if different
-                if new_filename != file:
-                    os.rename(old_path, new_path)
-                    renamed_files.append((file, new_filename))
-    
-    return renamed_files
+    # Save each image as PNG
+    image_paths = []
+    for i, img in enumerate(images, start=1):
+        img_path = os.path.join(output_folder, f"page_{i}.png")
+        print(f"[DEBUG] Saving page {i} to {img_path}")
+        img.save(img_path, "PNG")
+        image_paths.append(img_path)
 
+
+    print(f"[SUCCESS] Conversion completed: {zip_path}")
+    return zip_path
 
 # Example usage
-if __name__ == "__main__":
-    folder_path = "extracted-pages"
-    if os.path.exists(folder_path):
-        results = rename_pdfs_in_folder(folder_path)
-        if results:
-            print("\nRenamed files:")
-            for old, new in results:
-                print(f"{old} -> {new}")
-        else:
-            print("No files needed renaming.")
-    else:
-        print("❌ Folder not found. Please check the path.")
+pdf_path = "Spice&Grill Menu.pdf"
+output_folder = "/spice_grill_png"
+zip_path = "/SpiceGrillMenu_PNG_600DPI.zip"
+
+pdf_to_png_and_zip(pdf_path, output_folder, zip_path)

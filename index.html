@@ -9,7 +9,9 @@
 </head>
 <body>
 
-  <!-- <header class="navbar">
+  <!-- Navbar (you can uncomment it when needed) -->
+  <!--
+  <header class="navbar">
     <div class="logo">Spice & Grill</div>
     <nav>
       <a href="#page1">Home</a>
@@ -28,16 +30,28 @@
       <a href="#page14">Tender Shake’s|Fruit Salad’s & Flooda’s</a>
       <a href="#page15">Mojito’s</a>
     </nav>
-  </header> -->
+  </header>
+  -->
 
   <main id="pdf-container">
-    <!-- PDF pages will be rendered here -->
+    <!-- Images will be rendered here -->
   </main>
 
   <footer>© Spice & Grill 2025</footer>
 
-  <!-- PDF.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-  <script src="viewer.js"></script>
+  <script>
+    const container = document.getElementById('pdf-container');
+    const totalPages = 15;
+    const folderPath = 'SpiceGrillMenu/'; // Replace with your image folder path
+
+    for (let i = 1; i <= totalPages; i++) {
+      const img = document.createElement('img');
+      img.src = `${folderPath}page_${i}.png`;
+      img.alt = `Menu Page ${i}`;
+      img.classList.add('pdf-page');
+      img.id = `page${i}`;
+      container.appendChild(img);
+    }
+  </script>
 </body>
 </html>

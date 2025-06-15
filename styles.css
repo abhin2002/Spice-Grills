@@ -89,3 +89,19 @@ footer {
     width: 95%;
   }
 }
+
+/* Replaces canvas with image but keeps same style */
+img.pdf-page {
+  display: block;
+  margin-bottom: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  width: 90%;
+  max-width: 900px;
+  transition: transform 0.3s ease;
+}
+
+img.pdf-page:hover {
+  transform: scale(1.01);
+}
+
