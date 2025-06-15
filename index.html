@@ -42,11 +42,11 @@
   <script>
     const container = document.getElementById('pdf-container');
     const totalPages = 15;
-    const folderPath = 'SpiceGrillMenu/'; // Replace with your image folder path
+    const folderPath = 'JPEG/'; // Replace with your image folder path
 
     for (let i = 1; i <= totalPages; i++) {
       const img = document.createElement('img');
-      img.src = `${folderPath}page_${i}.png`;
+      img.src = `${folderPath}page_${i}.jpg`;
       img.alt = `Menu Page ${i}`;
       img.classList.add('pdf-page');
       img.id = `page${i}`;
